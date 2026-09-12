@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aroma — кофейня в центре</title>
 <meta name="description" content="Aroma — кофейня с собственной обжаркой. Спешелти-кофе, свежая выпечка.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23c65d2e'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23c1121f'/><text x='50' y='68' font-size='64' text-anchor='middle' fill='white' font-family='Georgia'>A</text></svg>">
 <meta property="og:title" content="Aroma — кофейня">
 <meta property="og:description" content="Спешелти-кофе, свежая выпечка, уютный зал.">
 <meta property="og:type" content="website">
@@ -13,15 +13,14 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #faf8f5;
-    --bg-alt: #f3efe9;
-    --card: #ffffff;
-    --text: #1a1614;
-    --muted: #6b635c;
+    --bg: #f5f1ea;
+    --bg-alt: #ede7dc;
+    --text: #0f0d0a;
+    --muted: #57504a;
     --dim: #9d948b;
-    --border: #e5dfd6;
-    --accent: #c65d2e;
-    --accent-soft: #e07a4a;
+    --border: #d8d0c2;
+    --accent: #c1121f;
+    --serif: Georgia, "Times New Roman", serif;
   }
 
   html { scroll-behavior: smooth; }
@@ -35,26 +34,25 @@
     overflow-x: hidden;
   }
 
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
 
   /* ---------- АНИМАЦИИ ---------- */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
 
   /* ---------- ШАПКА ---------- */
   header {
     position: fixed;
     top: 0; left: 0; right: 0;
-    padding: 22px 0;
-    background: rgba(250, 248, 245, 0.85);
+    padding: 24px 0;
+    background: rgba(245, 241, 234, 0.9);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
@@ -62,187 +60,147 @@
   }
   .nav { display: flex; justify-content: space-between; align-items: center; }
   .logo {
-    font-family: Georgia, serif;
-    font-size: 24px;
+    font-family: var(--serif);
+    font-size: 26px;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--text);
     text-decoration: none;
   }
   .logo span { color: var(--accent); }
-  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a {
-    color: var(--muted);
+    color: var(--text);
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
     transition: color 0.2s;
-    position: relative;
   }
-  .nav-links a::after {
-    content: "";
-    position: absolute;
-    bottom: -4px; left: 0;
-    width: 0; height: 1px;
-    background: var(--accent);
-    transition: width 0.3s;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover { color: var(--accent); }
 
   .nav-cta {
-    padding: 12px 26px;
+    padding: 12px 24px;
     background: var(--text);
     color: var(--bg);
-    border-radius: 100px;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    border-radius: 0;
+    cursor: default;
     user-select: none;
-    transition: background 0.25s, transform 0.25s;
+    transition: background 0.25s, color 0.25s;
   }
-  .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+  .nav-cta:hover { background: var(--accent); }
 
   /* ---------- HERO ---------- */
   .hero {
-    padding: 180px 0 100px;
-    position: relative;
+    padding: 200px 0 80px;
+    border-bottom: 1px solid var(--border);
   }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 80px;
+  .hero-meta {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-  }
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--accent);
-    margin-bottom: 32px;
-    font-weight: 600;
-    animation: fadeUp 0.8s 0.1s ease both;
+    color: var(--muted);
+    animation: fadeIn 0.8s 0.1s ease both;
   }
-  .hero-eyebrow::before {
-    content: "";
-    width: 40px; height: 1px;
+  .hero-meta .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
     background: var(--accent);
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
   }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   .hero h1 {
-    font-size: clamp(46px, 7vw, 96px);
-    font-weight: 700;
-    line-height: 1.02;
+    font-family: var(--serif);
+    font-size: clamp(56px, 11vw, 160px);
+    font-weight: 400;
+    line-height: 0.92;
     letter-spacing: -0.04em;
-    margin-bottom: 32px;
-    animation: fadeUp 0.8s 0.2s ease both;
+    margin-bottom: 60px;
+    animation: fadeUp 1s 0.2s ease both;
   }
   .hero h1 em {
     font-style: italic;
-    font-weight: 400;
-    font-family: Georgia, serif;
     color: var(--accent);
   }
-  .hero p {
-    font-size: 19px;
-    color: var(--muted);
-    max-width: 520px;
-    margin-bottom: 44px;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-  .hero-actions {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.4s ease both;
-  }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
+    from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+  .hero-bottom p {
+    font-size: 19px;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 480px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+  }
   .btn {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 16px 30px;
-    border-radius: 100px;
+    padding: 16px 32px;
     font-size: 15px;
     font-weight: 500;
     text-decoration: none;
-    transition: transform 0.25s, background 0.25s, border-color 0.25s, color 0.25s;
-    border: 1px solid transparent;
+    border: 1px solid var(--text);
+    transition: background 0.25s, color 0.25s;
     cursor: pointer;
   }
   .btn-primary {
     background: var(--text);
     color: var(--bg);
   }
-  .btn-primary:hover {
-    background: var(--accent);
-    transform: translateY(-2px);
-  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
   .btn-ghost {
     background: transparent;
     color: var(--text);
-    border-color: var(--border);
     cursor: default;
-  }
-
-  /* Визуал hero — карточка */
-  .hero-visual {
-    aspect-ratio: 4/5;
-    border-radius: 24px;
-    background:
-      linear-gradient(180deg, transparent 50%, rgba(26, 22, 20, 0.4)),
-      linear-gradient(135deg, #d9c5b0, #a07a55);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-end;
-    padding: 32px;
-    color: #fff;
-    animation: fadeScale 1s 0.3s ease both;
-    box-shadow: 0 30px 80px rgba(80, 50, 30, 0.15);
-  }
-  @keyframes fadeScale {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  .hero-visual::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15) 0%, transparent 40%);
-  }
-  .hero-visual .label {
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-weight: 600;
-    position: relative;
-    z-index: 1;
   }
 
   /* ---------- MARQUEE ---------- */
   .marquee {
-    padding: 36px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    padding: 30px 0;
+    background: var(--text);
+    color: var(--bg);
     overflow: hidden;
     white-space: nowrap;
   }
   .marquee-track {
     display: inline-flex;
     gap: 60px;
-    animation: scroll 35s linear infinite;
-    font-family: Georgia, serif;
+    animation: scroll 40s linear infinite;
+    font-family: var(--serif);
+    font-size: 24px;
     font-style: italic;
-    font-size: 22px;
-    color: var(--muted);
   }
   .marquee-track span {
     display: inline-flex;
@@ -253,7 +211,6 @@
     content: "✱";
     color: var(--accent);
     font-style: normal;
-    font-size: 16px;
   }
   @keyframes scroll {
     from { transform: translateX(0); }
@@ -261,95 +218,101 @@
   }
 
   /* ---------- СЕКЦИИ ---------- */
-  section { padding: 120px 0; }
+  section { padding: 100px 0; }
   .section-head {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 200px 1fr;
     gap: 60px;
     margin-bottom: 70px;
-    padding-bottom: 32px;
+    padding-bottom: 30px;
     border-bottom: 1px solid var(--border);
     align-items: baseline;
   }
-  .section-num {
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 15px;
+  .section-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
     color: var(--accent);
+    font-weight: 600;
   }
   .section-heading {
-    font-size: clamp(36px, 5vw, 64px);
-    font-weight: 700;
-    letter-spacing: -0.035em;
+    font-family: var(--serif);
+    font-size: clamp(38px, 5.5vw, 68px);
+    font-weight: 400;
+    letter-spacing: -0.03em;
     line-height: 1.05;
   }
   .section-heading em {
     font-style: italic;
-    font-weight: 400;
-    font-family: Georgia, serif;
     color: var(--accent);
   }
 
-  /* ---------- О НАС ---------- */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
+  /* ---------- МАНИФЕСТ ---------- */
+  .manifest {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3.2vw, 40px);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    max-width: 1000px;
+    margin-bottom: 80px;
   }
-  .about-text {
-    font-size: 22px;
-    line-height: 1.5;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-  }
-  .about-text em {
+  .manifest em {
     font-style: italic;
-    font-family: Georgia, serif;
     color: var(--accent);
   }
-  .about-features {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+
+  .features-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    margin-top: 40px;
   }
-  .about-feature {
-    padding: 28px 0;
-    border-bottom: 1px solid var(--border);
+  .feature {
+    padding-top: 30px;
+    border-top: 2px solid var(--text);
   }
-  .about-feature:last-child { border-bottom: none; }
-  .about-feature h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    letter-spacing: -0.01em;
+  .feature .num {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 20px;
   }
-  .about-feature p {
-    color: var(--muted);
+  .feature h3 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .feature p {
     font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
   }
 
   /* ---------- МЕНЮ ---------- */
   .menu {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0 80px;
+    gap: 0 100px;
   }
   .menu-item {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 26px 0;
+    padding: 24px 0;
     border-bottom: 1px solid var(--border);
     transition: padding 0.3s;
     cursor: pointer;
   }
-  .menu-item:hover { padding-left: 10px; }
+  .menu-item:hover { padding-left: 12px; }
   .menu-item .info { flex: 1; padding-right: 20px; }
   .menu-item .name {
-    font-size: 19px;
-    font-weight: 500;
-    margin-bottom: 2px;
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
     transition: color 0.25s;
     letter-spacing: -0.01em;
   }
@@ -357,146 +320,157 @@
   .menu-item .desc {
     font-size: 14px;
     color: var(--dim);
-    font-family: Georgia, serif;
     font-style: italic;
+    font-family: var(--serif);
   }
   .menu-item .price {
-    font-size: 19px;
-    font-weight: 600;
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
     color: var(--text);
     white-space: nowrap;
-    letter-spacing: -0.01em;
   }
 
-  /* ---------- ГАЛЕРЕЯ ---------- */
+  /* ---------- ГАЛЕРЕЯ (ФОТО В ГАЗЕТНОМ СТИЛЕ) ---------- */
   .gallery {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    grid-template-rows: 280px 280px;
-    gap: 12px;
+    grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 40px 40px;
   }
-  .g-cell {
-    border-radius: 16px;
-    overflow: hidden;
+  .photo {
     position: relative;
-    display: flex;
-    align-items: flex-end;
-    padding: 28px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #fff;
-    cursor: pointer;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .photo-img {
+    width: 100%;
+    aspect-ratio: 4/5;
     background-size: cover;
     background-position: center;
+    border: 1px solid var(--border);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
   }
-  .g-cell::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(26, 22, 20, 0.7));
-    z-index: 1;
+  .photo:hover .photo-img { transform: scale(1.02); }
+  .photo figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--muted);
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
   }
-  .g-cell:hover { transform: scale(1.02); }
-  .g-cell span { position: relative; z-index: 2; }
-  .g-1 {
-    grid-row: 1 / 3;
-    background-image: url('https://cdn.phototourl.com/free/2026-09-11-6477c7e0-e3b4-40e4-b3fd-413a381c0f86.webp');
+  .photo figcaption .title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text);
   }
-  .g-2 {
-    background-image: url('https://cdn.phototourl.com/free/2026-09-11-d1a371a1-178a-4892-8ae1-eec947ad8b96.webp');
+  .photo figcaption .num {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--dim);
   }
-  .g-3 {
-    background-image: url('https://cdn.phototourl.com/free/2026-09-11-ba9068ef-1cab-4a05-93d1-5401b53c4734.jpg');
+
+  /* Большое фото сверху на всю ширину */
+  .photo-wide {
+    grid-column: 1 / -1;
+    margin-bottom: 20px;
   }
-  .g-4 {
-    background-image: url('https://cdn.phototourl.com/free/2026-09-11-7135a70b-7cf2-4a20-a12f-55f6383de7ef.jpg');
+  .photo-wide .photo-img {
+    aspect-ratio: 21/9;
   }
-  .g-5 {
-    background-image: url('https://cdn.phototourl.com/free/2026-09-11-ba9068ef-1cab-4a05-93d1-5401b53c4734.jpg');
+
+  /* Два фото в ряд */
+  .photo-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    grid-column: 1 / -1;
   }
 
   /* ---------- ОТЗЫВЫ ---------- */
   .reviews {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    gap: 60px;
   }
   .review {
-    padding: 0;
+    padding-top: 30px;
+    border-top: 1px solid var(--text);
   }
   .review .stars {
     color: var(--accent);
-    font-size: 15px;
-    letter-spacing: 2px;
+    font-size: 14px;
+    letter-spacing: 4px;
     margin-bottom: 20px;
   }
   .review p {
-    font-family: Georgia, serif;
-    font-size: 19px;
-    line-height: 1.6;
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.5;
     color: var(--text);
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     font-style: italic;
   }
   .review-author {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    font-weight: 500;
   }
-  .avatar {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .review-author strong {
+    color: var(--text);
     font-weight: 600;
-    color: var(--accent);
-    font-family: Georgia, serif;
-    font-size: 16px;
   }
-  .review-author .name { font-size: 15px; font-weight: 600; }
-  .review-author .role { font-size: 13px; color: var(--dim); }
 
   /* ---------- CTA ---------- */
   .cta {
     text-align: center;
-    padding: 100px 40px;
-    background: var(--bg-alt);
-    border-radius: 24px;
-    border: 1px solid var(--border);
+    padding: 140px 40px;
+    background: var(--text);
+    color: var(--bg);
+  }
+  .cta .label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 30px;
+    font-weight: 600;
   }
   .cta h2 {
-    font-size: clamp(36px, 5.5vw, 72px);
-    font-weight: 700;
+    font-family: var(--serif);
+    font-size: clamp(44px, 7vw, 96px);
+    font-weight: 400;
     letter-spacing: -0.04em;
     line-height: 1;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
   .cta h2 em {
     font-style: italic;
-    font-weight: 400;
-    font-family: Georgia, serif;
     color: var(--accent);
   }
-  .cta p {
-    color: var(--muted);
-    font-size: 17px;
-    margin-bottom: 36px;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+  .cta .btn-primary {
+    background: var(--bg);
+    color: var(--text);
+    border-color: var(--bg);
+  }
+  .cta .btn-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
   }
 
   /* ---------- ПОДВАЛ ---------- */
   footer {
     padding: 40px 0;
-    border-top: 1px solid var(--border);
-    margin-top: 80px;
+    background: var(--text);
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid #2a2620;
   }
   .footer-inner {
     display: flex;
@@ -504,38 +478,32 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-    color: var(--dim);
-    font-size: 14px;
   }
   .footer-logo {
-    font-family: Georgia, serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--bg);
   }
   .footer-logo span { color: var(--accent); }
 
   /* ---------- АДАПТИВ ---------- */
   @media (max-width: 900px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-    .hero-visual { max-width: 400px; aspect-ratio: 1; }
+    .container { padding: 0 24px; }
+    .hero-bottom { grid-template-columns: 1fr; gap: 32px; }
+    .hero-actions { justify-content: flex-start; }
     .section-head { grid-template-columns: 1fr; gap: 16px; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .features-list { grid-template-columns: 1fr; gap: 40px; }
     .menu { grid-template-columns: 1fr; gap: 0; }
     .reviews { grid-template-columns: 1fr; gap: 40px; }
-    .gallery {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: repeat(3, 220px);
-    }
-    .g-1 { grid-row: auto; grid-column: 1 / -1; }
+    .gallery { grid-template-columns: 1fr; }
+    .photo-row { grid-template-columns: 1fr; gap: 40px; }
   }
   @media (max-width: 640px) {
     .nav-links { display: none; }
-    section { padding: 80px 0; }
-    .hero { padding: 140px 0 60px; }
+    section { padding: 70px 0; }
+    .hero { padding: 150px 0 60px; }
     .hero-actions .btn { width: 100%; justify-content: center; }
-    .gallery { grid-template-columns: 1fr; grid-template-rows: repeat(5, 200px); }
-    .cta { padding: 60px 24px; }
+    .cta { padding: 80px 24px; }
   }
 </style>
 </head>
@@ -557,18 +525,20 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <div class="hero-eyebrow">Спешелти-кофейня в центре</div>
-      <h1>Кофе, ради которого<br>хочется <em>выйти</em><br>из дома</h1>
+  <div class="container">
+    <div class="hero-meta">
+      <div><span class="dot"></span>Спешелти-кофейня · центр города</div>
+      <div>Est. 2020</div>
+    </div>
+
+    <h1>Кофе, ради<br>которого <em>хочется</em><br>выйти из дома</h1>
+
+    <div class="hero-bottom">
       <p>Своя обжарка, зерно из Эфиопии и Колумбии, бариста с опытом. Открыто каждый день с 8:00 до 22:00.</p>
       <div class="hero-actions">
         <a href="#menu" class="btn btn-primary">Смотреть меню →</a>
         <span class="btn btn-ghost">Как добраться</span>
       </div>
-    </div>
-    <div class="hero-visual">
-      <div class="label">Aroma · с 2020</div>
     </div>
   </div>
 </section>
@@ -591,27 +561,29 @@
 <section id="about">
   <div class="container">
     <div class="section-head reveal">
-      <div class="section-num">01 — О нас</div>
+      <div class="section-label">01 — О нас</div>
       <h2 class="section-heading">Маленькая кофейня<br>с <em>большой</em> любовью</h2>
     </div>
 
-    <div class="about-grid">
-      <div class="about-text reveal">
-        Мы открылись в 2020 году с одной идеей — делать кофе, который хочется <em>пить медленно</em>. Каждая чашка — результат работы фермеров, обжарщиков и бариста.
+    <div class="manifest reveal">
+      Мы открылись в 2020 году с одной идеей — делать кофе, который хочется <em>пить медленно</em>. Каждая чашка — результат работы фермеров, обжарщиков и бариста.
+    </div>
+
+    <div class="features-list">
+      <div class="feature reveal">
+        <div class="num">i.</div>
+        <h3>Своя обжарка</h3>
+        <p>Обжариваем зерно каждую неделю — свежесть чувствуется с первого глотка.</p>
       </div>
-      <div class="about-features reveal reveal-delay-1">
-        <div class="about-feature">
-          <h3>Своя обжарка</h3>
-          <p>Обжариваем зерно каждую неделю — свежесть чувствуется с первого глотка.</p>
-        </div>
-        <div class="about-feature">
-          <h3>Прямые поставки</h3>
-          <p>Работаем напрямую с фермами Эфиопии, Колумбии и Бразилии.</p>
-        </div>
-        <div class="about-feature">
-          <h3>Бариста с опытом</h3>
-          <p>Прошли обучение в Specialty Coffee Association. Знаем, как раскрыть вкус.</p>
-        </div>
+      <div class="feature reveal reveal-delay-1">
+        <div class="num">ii.</div>
+        <h3>Прямые поставки</h3>
+        <p>Работаем напрямую с фермами Эфиопии, Колумбии и Бразилии.</p>
+      </div>
+      <div class="feature reveal reveal-delay-2">
+        <div class="num">iii.</div>
+        <h3>Бариста с опытом</h3>
+        <p>Прошли обучение в Specialty Coffee Association. Знаем, как раскрыть вкус.</p>
       </div>
     </div>
   </div>
@@ -621,40 +593,40 @@
 <section id="menu" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
-      <div class="section-num">02 — Меню</div>
+      <div class="section-label">02 — Меню</div>
       <h2 class="section-heading">Что <em>попробовать</em></h2>
     </div>
 
     <div class="menu">
-      <div class="menu-item reveal reveal-delay-1">
+      <div class="menu-item reveal">
         <div class="info"><div class="name">Эспрессо</div><div class="desc">классика, 30 мл</div></div>
         <div class="price">150 ₽</div>
       </div>
-      <div class="menu-item reveal reveal-delay-2">
+      <div class="menu-item reveal reveal-delay-1">
         <div class="info"><div class="name">Капучино</div><div class="desc">плотная пенка, 250 мл</div></div>
         <div class="price">250 ₽</div>
       </div>
-      <div class="menu-item reveal reveal-delay-1">
+      <div class="menu-item reveal">
         <div class="info"><div class="name">Латте</div><div class="desc">с сиропом на выбор</div></div>
         <div class="price">280 ₽</div>
       </div>
-      <div class="menu-item reveal reveal-delay-2">
+      <div class="menu-item reveal reveal-delay-1">
         <div class="info"><div class="name">Флэт уайт</div><div class="desc">двойной, на цельном молоке</div></div>
         <div class="price">290 ₽</div>
       </div>
-      <div class="menu-item reveal reveal-delay-1">
+      <div class="menu-item reveal">
         <div class="info"><div class="name">Раф ванильный</div><div class="desc">нежный, с ванилью</div></div>
         <div class="price">320 ₽</div>
       </div>
-      <div class="menu-item reveal reveal-delay-2">
+      <div class="menu-item reveal reveal-delay-1">
         <div class="info"><div class="name">Круассан</div><div class="desc">свежий, из пекарни рядом</div></div>
         <div class="price">190 ₽</div>
       </div>
-      <div class="menu-item reveal reveal-delay-1">
+      <div class="menu-item reveal">
         <div class="info"><div class="name">Чизкейк</div><div class="desc">Нью-Йорк, с ягодным соусом</div></div>
         <div class="price">340 ₽</div>
       </div>
-      <div class="menu-item reveal reveal-delay-2">
+      <div class="menu-item reveal reveal-delay-1">
         <div class="info"><div class="name">Матча-латте</div><div class="desc">на цельном или овсяном молоке</div></div>
         <div class="price">300 ₽</div>
       </div>
@@ -666,16 +638,47 @@
 <section id="gallery" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
-      <div class="section-num">03 — Атмосфера</div>
+      <div class="section-label">03 — Атмосфера</div>
       <h2 class="section-heading">Заходите <em>посмотреть</em></h2>
     </div>
 
     <div class="gallery">
-      <div class="g-cell g-1 reveal"><span>Главный зал</span></div>
-      <div class="g-cell g-2 reveal reveal-delay-1"><span>Бар</span></div>
-      <div class="g-cell g-3 reveal reveal-delay-2"><span>Витрина с десертами</span></div>
-      <div class="g-cell g-4 reveal reveal-delay-1"><span>Летняя веранда</span></div>
-      <div class="g-cell g-5 reveal reveal-delay-2"><span>Уголок для работы</span></div>
+      <!-- Большое фото на всю ширину -->
+      <figure class="photo photo-wide reveal">
+        <div class="photo-img" style="background-image:url('https://cdn.phototourl.com/free/2026-09-11-6477c7e0-e3b4-40e4-b3fd-413a381c0f86.webp');"></div>
+        <figcaption>
+          <span class="title">Главный зал</span>
+          <span class="num">Fig. 01</span>
+        </figcaption>
+      </figure>
+
+      <!-- Два фото в ряд -->
+      <div class="photo-row">
+        <figure class="photo reveal">
+          <div class="photo-img" style="background-image:url('https://cdn.phototourl.com/free/2026-09-11-d1a371a1-178a-4892-8ae1-eec947ad8b96.webp');"></div>
+          <figcaption>
+            <span class="title">Бар</span>
+            <span class="num">Fig. 02</span>
+          </figcaption>
+        </figure>
+
+        <figure class="photo reveal reveal-delay-1">
+          <div class="photo-img" style="background-image:url('https://cdn.phototourl.com/free/2026-09-11-ba9068ef-1cab-4a05-93d1-5401b53c4734.jpg');"></div>
+          <figcaption>
+            <span class="title">Витрина с десертами</span>
+            <span class="num">Fig. 03</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Ещё одно большое фото -->
+      <figure class="photo photo-wide reveal">
+        <div class="photo-img" style="background-image:url('https://cdn.phototourl.com/free/2026-09-11-7135a70b-7cf2-4a20-a12f-55f6383de7ef.jpg');"></div>
+        <figcaption>
+          <span class="title">Летняя веранда</span>
+          <span class="num">Fig. 04</span>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -684,56 +687,37 @@
 <section id="reviews" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
-      <div class="section-num">04 — Отзывы</div>
+      <div class="section-label">04 — Отзывы</div>
       <h2 class="section-heading">Что говорят <em>гости</em></h2>
     </div>
 
     <div class="reviews">
-      <div class="review reveal reveal-delay-1">
+      <div class="review reveal">
         <div class="stars">★★★★★</div>
         <p>«Лучший капучино в городе. Хожу каждое утро перед работой — бариста уже знают мой заказ.»</p>
-        <div class="review-author">
-          <div class="avatar">А</div>
-          <div>
-            <div class="name">Анна</div>
-            <div class="role">постоянный гость</div>
-          </div>
-        </div>
+        <div class="review-author"><strong>Анна</strong> · постоянный гость</div>
+      </div>
+      <div class="review reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <p>«Работаю здесь по несколько часов. Тихо, вкусно, есть розетки. Идеальное место для фриланса.»</p>
+        <div class="review-author"><strong>Михаил</strong> · дизайнер</div>
       </div>
       <div class="review reveal reveal-delay-2">
         <div class="stars">★★★★★</div>
-        <p>«Работаю здесь по несколько часов. Тихо, вкусно, есть розетки. Идеальное место для фриланса.»</p>
-        <div class="review-author">
-          <div class="avatar">М</div>
-          <div>
-            <div class="name">Михаил</div>
-            <div class="role">дизайнер</div>
-          </div>
-        </div>
-      </div>
-      <div class="review reveal reveal-delay-3">
-        <div class="stars">★★★★★</div>
         <p>«Открыл для себя флэт уайт именно здесь. Пробовал в других местах — не то. Возвращаюсь снова.»</p>
-        <div class="review-author">
-          <div class="avatar">Д</div>
-          <div>
-            <div class="name">Дмитрий</div>
-            <div class="role">предприниматель</div>
-          </div>
-        </div>
+        <div class="review-author"><strong>Дмитрий</strong> · предприниматель</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section id="contacts" style="padding-top: 0;">
-  <div class="container">
-    <div class="cta reveal">
-      <h2>Ждём вас<br><em>каждый день</em></h2>
-      <p>Открыто с 8:00 до 22:00 без выходных. Заходите на кофе или бронируйте столик заранее.</p>
-      <span class="btn btn-primary">Забронировать столик →</span>
-    </div>
+<section id="contacts" style="padding: 0;">
+  <div class="cta reveal">
+    <div class="label">З
+абронировать столик</div>
+    <h2>Ждём вас<br><em>каждый день</em></h2>
+    <span class="btn btn-primary">Забронировать →</span>
   </div>
 </section>
 
@@ -741,7 +725,7 @@
 <footer>
   <div class="container footer-inner">
     <div class="footer-logo">Aroma<span>.</span></div>
-    <div>© 2026 Aroma · Кофейня</div>
+    <div>© 2026 Aroma · Кофейня · Est. 2020</div>
   </div>
 </footer>
 
@@ -753,11 +737,10 @@
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
 </body>
 </html>
-      
