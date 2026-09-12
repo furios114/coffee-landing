@@ -3,25 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>west — Python / JavaScript разработчик</title>
-<meta name="description" content="west — разработчик. Telegram-боты, парсеры, скрипты, сайты.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%237c5cff'/></svg>">
-<meta property="og:title" content="west — Python / JavaScript разработчик">
-<meta property="og:description" content="Telegram-боты, парсеры, скрипты, сайты. Доступен для заказов.">
+<title>Aroma — кофейня в центре</title>
+<meta name="description" content="Aroma — кофейня с собственной обжаркой. Спешелти-кофе, свежая выпечка, уютный зал.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23c1121f'/><text x='50' y='68' font-size='64' text-anchor='middle' fill='white' font-family='Georgia'>A</text></svg>">
+<meta property="og:title" content="Aroma — кофейня">
+<meta property="og:description" content="Спешелти-кофе, свежая выпечка, уютный зал.">
 <meta property="og:type" content="website">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #0a0a0c;
-    --bg-soft: #111114;
-    --card: #16161a;
-    --border: #222228;
-    --text: #f0f0f4;
-    --muted: #8b8b96;
-    --dim: #56565f;
-    --accent: #7c5cff;
-    --accent-soft: #a08cff;
+    --bg: #f5f1ea;
+    --bg-alt: #ede7dc;
+    --text: #0f0d0a;
+    --muted: #57504a;
+    --dim: #9d948b;
+    --border: #d8d0c2;
+    --accent: #c1121f;
+    --serif: Georgia, "Times New Roman", serif;
   }
 
   html { scroll-behavior: smooth; }
@@ -33,550 +32,502 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-    cursor: none;
   }
 
-  /* АВРОРА-ФОН */
-  .aurora {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-  .aurora span {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.35;
-  }
-  .aurora span:nth-child(1) {
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, #7c5cff, transparent 70%);
-    top: -10%; left: -10%;
-    animation: float1 20s ease-in-out infinite;
-  }
-  .aurora span:nth-child(2) {
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, #3a2a8f, transparent 70%);
-    bottom: -20%; right: -15%;
-    animation: float2 25s ease-in-out infinite;
-  }
-  .aurora span:nth-child(3) {
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, #5c3aff, transparent 70%);
-    top: 40%; left: 50%;
-    animation: float3 30s ease-in-out infinite;
-  }
-  @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(80px,60px); } }
-  @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-100px,-80px); } }
-  @keyframes float3 { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,-60px); } }
-
-  /* ШУМ-ТЕКСТУРА */
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 40px;
   }
 
-  /* КАСТОМНЫЙ КУРСОР */
-  .cursor {
-    position: fixed;
-    width: 12px; height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, background 0.2s;
-    mix-blend-mode: screen;
-    display: none;
-  }
-  .cursor.hover {
-    width: 40px; height: 40px;
-    background: rgba(124, 92, 255, 0.5);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .cursor { display: block; }
-  }
-
-  /* СКРОЛЛ-ПРОГРЕСС */
+  /* ПРОГРЕСС */
   .progress {
     position: fixed;
     top: 0; left: 0;
     height: 2px;
     width: 0%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+    background: var(--accent);
     z-index: 1000;
     transition: width 0.1s linear;
   }
 
-  /* КНОПКА "НАВЕРХ" */
+  /* КНОПКА НАВЕРХ */
   .to-top {
     position: fixed;
-    bottom: 30px; right: 30px;
-    width: 48px; height: 48px;
-    background: var(--card);
-    border: 1px solid var(--border);
+    bottom: 24px; right: 24px;
+    width: 44px; height: 44px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text);
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s, transform 0.3s, border-color 0.3s;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
     z-index: 500;
-    font-size: 20px;
+    font-size: 18px;
   }
   .to-top.show { opacity: 1; visibility: visible; }
-  .to-top:hover {
-    border-color: var(--accent);
-    color: var(--accent-soft);
-    transform: translateY(-3px);
-  }
+  .to-top:hover { transform: translateY(-3px); background: var(--accent); }
 
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 28px;
-    position: relative;
-    z-index: 2;
+  /* REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
   }
-/* АНИМАЦИИ ПОЯВЛЕНИЯ */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
 /* ШАПКА */
 header {
   position: fixed;
   top: 0; left: 0; right: 0;
-  padding: 20px 0;
-  background: rgba(10, 10, 12, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  padding: 22px 0;
+  background: rgba(245, 241, 234, 0.95);
   border-bottom: 1px solid var(--border);
   z-index: 100;
 }
 .nav { display: flex; justify-content: space-between; align-items: center; }
 .logo {
-  font-size: 18px;
+  font-family: var(--serif);
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text);
   text-decoration: none;
 }
-.logo::before {
-  content: "";
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+.nav-cta {
+  padding: 12px 24px;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  cursor: default;
+  user-select: none;
+}
+
+.burger {
+  display: none;
+  width: 30px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  z-index: 200;
+}
+.burger span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: var(--text);
+  left: 0;
+  transition: all 0.3s;
+}
+.burger span:nth-child(1) { top: 0; }
+.burger span:nth-child(2) { top: 9px; }
+.burger span:nth-child(3) { top: 18px; }
+.burger.open span:nth-child(1) { top: 9px; transform: rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg);
+  z-index: 150;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.mobile-menu.open { opacity: 1; visibility: visible; }
+.mobile-menu a {
+  font-family: var(--serif);
+  font-size: 32px;
+  color: var(--text);
+  text-decoration: none;
+  font-style: italic;
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--accent); }
+/* HERO */
+.hero {
+  padding: 180px 0 80px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 50px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+.hero-meta .dot {
   display: inline-block;
-  width: 8px; height: 8px;
+  width: 6px; height: 6px;
   background: var(--accent);
   border-radius: 50%;
   margin-right: 10px;
-  box-shadow: 0 0 12px var(--accent);
   vertical-align: middle;
-}
-.nav-links { display: flex; gap: 32px; list-style: none; }
-.nav-links a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 14px;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--text); }
-/* HERO */
-.hero { padding: 180px 0 120px; }
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 28px;
-  animation: fadeUp 0.8s 0.1s ease both;
-}
-.hero-eyebrow .dot {
-  width: 7px; height: 7px;
-  background: #3ddc84;
-  border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(61,220,132,0.6);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(61,220,132,0.5); }
-  70% { box-shadow: 0 0 0 8px rgba(61,220,132,0); }
-  100% { box-shadow: 0 0 0 0 rgba(61,220,132,0); }
 }
 
 .hero h1 {
-  font-size: clamp(44px, 7vw, 84px);
-  font-weight: 700;
-  line-height: 1.05;
+  font-family: var(--serif);
+  font-size: clamp(52px, 11vw, 150px);
+  font-weight: 400;
+  line-height: 0.95;
   letter-spacing: -0.04em;
-  margin-bottom: 28px;
-}
-.hero h1 .line {
-  display: block;
-  overflow: hidden;
-}
-.hero h1 .line > span {
-  display: inline-block;
-  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.hero h1 .line:nth-child(1) > span { animation-delay: 0.15s; }
-.hero h1 .line:nth-child(2) > span { animation-delay: 0.3s; }
-@keyframes slideUp {
-  from { transform: translateY(110%); }
-  to { transform: translateY(0); }
+  margin-bottom: 50px;
 }
 .hero h1 em {
   font-style: italic;
-  font-weight: 400;
-  font-family: Georgia, serif;
-  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ПЕЧАТАЮЩИЙСЯ ТЕКСТ — МЕНЬШЕ */
-.type-wrap {
-  display: inline-block;
-  font-size: 0.65em;
-  position: relative;
-  vertical-align: baseline;
-}
-.type-wrap::after {
-  content: "|";
   color: var(--accent);
-  animation: blink 0.9s step-end infinite;
-  margin-left: 2px;
-  font-weight: 400;
-}
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
 }
 
-.hero p {
+.hero-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+}
+.hero-bottom p {
   font-size: 19px;
   color: var(--muted);
-  max-width: 600px;
-  margin-bottom: 40px;
-  animation: fadeUp 0.8s 0.5s ease both;
+  line-height: 1.5;
+  max-width: 480px;
 }
 .hero-actions {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  animation: fadeUp 0.8s 0.6s ease both;
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  justify-content: flex-end;
+  align-items: center;
 }
 
-/* КНОПКИ */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 15px 28px;
-  border-radius: 100px;
-  font-size: 15px;
+  padding: 16px 32px;
+  font-size: 14px;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   text-decoration: none;
-  transition: transform 0.25s, border-color 0.25s, color 0.25s;
-  border: 1px solid transparent;
+  border: 1px solid var(--text);
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.btn-primary {
-  background: linear-gradient(120deg, var(--accent), var(--accent-soft), var(--accent));
-  background-size: 200% 100%;
-  animation: gradientShift 4s ease infinite;
-  color: #fff;
-  box-shadow: 0 10px 40px rgba(124, 92, 255, 0.3);
-}
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-.btn-ghost {
+  font-family: inherit;
   background: transparent;
   color: var(--text);
-  border-color: var(--border);
 }
-.btn-ghost:hover {
-  border-color: var(--accent);
-  color: var(--accent-soft);
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
 }
+.btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+.btn-ghost { cursor: default; }
+/* MARQUEE */
+.marquee {
+  padding: 30px 0;
+  background: var(--text);
+  color: var(--bg);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-flex;
+  gap: 60px;
+  animation: scroll 60s linear infinite;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+}
+.marquee-track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 60px;
+}
+.marquee-track span::after {
+  content: "✱";
+  color: var(--accent);
+  font-style: normal;
+}
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* СЕКЦИИ */
-section { padding: 100px 0; }
+section { padding: 80px 0; }
 .section-head {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 60px;
+  margin-bottom: 50px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+.section-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  font-weight: 600;
+}
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(34px, 5.5vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.section-heading em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* МАНИФЕСТ */
+.manifest {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3vw, 38px);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  max-width: 1000px;
+  margin-bottom: 60px;
+}
+.manifest em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+}
+.feature {
+  padding-top: 24px;
+  border-top: 2px solid var(--text);
+}
+.feature .num {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--accent);
+  font-style: italic;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+.feature h3 {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+.feature p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+/* МЕНЮ */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 80px;
+}
+.menu-item {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 48px;
-  padding-bottom: 20px;
+  padding: 22px 0;
   border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-  gap: 12px;
+  transition: padding 0.3s;
+  cursor: pointer;
 }
-.section-title {
-  font-size: 14px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-weight: 600;
-}
-.section-num {
-  font-size: 14px;
-  color: var(--dim);
-  font-family: Georgia, serif;
-  font-style: italic;
-}
-
-/* УСЛУГИ */
-.services { display: flex; flex-direction: column; }
-.service-row {
-  display: grid;
-  grid-template-columns: 60px 1fr 2fr;
-  gap: 32px;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--border);
-  align-items: baseline;
-  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.service-row:last-child { border-bottom: none; }
-.service-row:hover { padding-left: 20px; }
-.service-row .num {
-  font-size: 14px;
-  color: var(--dim);
-  font-family: Georgia, serif;
-  font-style: italic;
-}
-.service-row .name {
+.menu-item:hover { padding-left: 12px; }
+.menu-item .info { flex: 1; padding-right: 20px; }
+.menu-item .name {
+  font-family: var(--serif);
   font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  margin-bottom: 4px;
   transition: color 0.25s;
+  letter-spacing: -0.01em;
 }
-.service-row:hover .name { color: var(--accent-soft); }
-.service-row .desc { color: var(--muted); font-size: 15px; }
-/* НАВЫКИ */
-.skills { display: flex; flex-wrap: wrap; gap: 10px; }
-.skill {
-  padding: 10px 20px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 100px;
+.menu-item:hover .name { color: var(--accent); }
+.menu-item .desc {
   font-size: 14px;
-  color: var(--muted);
-  transition: all 0.25s;
+  color: var(--dim);
+  font-style: italic;
+  font-family: var(--serif);
 }
-.skill:hover {
-  border-color: var(--accent);
-  color: var(--accent-soft);
-  transform: translateY(-2px);
+.menu-item .price {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  white-space: nowrap;
 }
 
-/* ПРОЕКТЫ */
-.projects { display: grid; grid-template-columns: 1fr; gap: 20px; }
-.project {
+/* ГАЛЕРЕЯ */
+.gallery {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 40px;
+}
+.photo { position: relative; }
+.photo-wide { grid-column: 1 / -1; }
+.photo-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform 0.6s ease;
+}
+.photo-wide .photo-img { aspect-ratio: 21/9; }
+.photo:hover .photo-img { transform: scale(1.015); }
+.photo figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.photo figcaption .title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.photo figcaption .num { color: var(--dim); }
+.photo-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
-  position: relative;
-  z-index: 2;
+  gap: 40px;
+  grid-column: 1 / -1;
 }
-.project:hover {
-  transform: translateY(-4px);
-  border-color: rgba(124, 92, 255, 0.4);
-}
-.project-preview {
-  aspect-ratio: 16/10;
-  background: linear-gradient(135deg, #1a1a1f, #111114);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid var(--border);
-  overflow: hidden;
-  padding: 16px;
-  position: relative;
-  z-index: 2;
-}
-.project-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
-  display: block;
-  pointer-events: none;
-}
-.project-info {
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.project-tag {
-  font-size: 12px;
-  color: var(--accent-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-.project-info h3 {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 12px;
-}
-.project-info p {
-  color: var(--muted);
-  font-size: 15px;
-  margin-bottom: 24px;
-}
-.project-link {
-  font-size: 14px;
-  color: var(--accent-soft);
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: gap 0.25s;
-}
-.project:hover .project-link { gap: 12px; }
-  /* ОБО МНЕ */
-  .about {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 60px;
-    align-items: start;
-  }
-  .about-photo {
-    aspect-ratio: 1;
-    border-radius: 24px;
-    background:
-      radial-gradient(circle at 50% 40%, rgba(124, 92, 255, 0.2), transparent 60%),
-      linear-gradient(135deg, #1a1a1f, #111114);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Georgia, serif;
-    font-size: 120px;
-    font-weight: 700;
-    color: var(--accent-soft);
-    font-style: italic;
-    overflow: hidden;
-  }
-  .about-photo img { width: 100%; height: 100%; object-fit: cover; }
-  .about-text h3 {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-    line-height: 1.2;
-  }
-  .about-text p { color: var(--muted); font-size: 16px; margin-bottom: 20px; }
-  .about-stats {
+  /* ОТЗЫВЫ */
+  .reviews {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 32px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
+    gap: 50px;
   }
-  .stat .value {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--accent-soft), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .review {
+    padding-top: 24px;
+    border-top: 1px solid var(--text);
   }
-  .stat .label { font-size: 13px; color: var(--dim); margin-top: 4px; }
+  .review .stars {
+    color: var(--accent);
+    font-size: 13px;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+  }
+  .review p {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .review-author {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .review-author strong { color: var(--text); font-weight: 600; }
 
   /* CTA */
   .cta {
     text-align: center;
-    padding: 80px 40px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    position: relative;
-    overflow: hidden;
+    padding: 100px 40px;
+    background: var(--text);
+    color: var(--bg);
   }
-  .cta::before {
-    content: "";
-    position: absolute;
-    top: -50%; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(124, 92, 255, 0.15), transparent 60%);
-    pointer-events: none;
+  .cta .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 24px;
+    font-weight: 600;
   }
   .cta h2 {
-    font-size: clamp(32px, 5vw, 56px);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
+    font-family: var(--serif);
+    font-size: clamp(40px, 7vw, 88px);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 32px;
   }
   .cta h2 em {
     font-style: italic;
-    font-weight: 400;
-    font-family: Georgia, serif;
-    background: linear-gradient(135deg, var(--accent-soft), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent);
   }
-  .cta p {
-    color: var(--muted);
-    font-size: 17px;
-    margin-bottom: 36px;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    z-index: 1;
+  .cta .btn {
+    background: var(--bg);
+    color: var(--text);
+    border-color: var(--bg);
   }
-  .cta .btn { position: relative; z-index: 1; }
+  .cta .btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
 
   /* ПОДВАЛ */
   footer {
-    padding: 40px 0;
-    border-top: 1px solid var(--border);
-    margin-top: 80px;
+    padding: 36px 0;
+    background: var(--text);
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid #2a2620;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
   }
   .footer-inner {
     display: flex;
@@ -584,204 +535,282 @@ section { padding: 100px 0; }
     align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-    color: var(--dim);
-    font-size: 14px;
   }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a {
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--bg);
+    text-transform: none;
+    letter-spacing: -0.02em;
   }
-  .footer-links a:hover { color: var(--accent-soft); }
+  .footer-logo span { color: var(--accent); }
 
   /* АДАПТИВ */
   @media (max-width: 900px) {
-    .project { grid-template-columns: 1fr; }
-    .project-preview { border-right: none; border-bottom: 1px solid var(--border); }
-    .about { grid-template-columns: 1fr; gap: 40px; }
-    .about-photo { max-width: 300px; }
-    .service-row { grid-template-columns: 40px 1fr; gap: 16px; }
-    .service-row .desc { grid-column: 2; font-size: 14px; }
+    .container { padding: 0 24px; }
+    .hero-bottom { grid-template-columns: 1fr; gap: 28px; }
+    .hero-actions { justify-content: flex-start; }
+    .section-head { grid-template-columns: 1fr; gap: 12px; }
+    .features-list { grid-template-columns: 1fr; gap: 32px; }
+    .menu { grid-template-columns: 1fr; gap: 0; }
+    .reviews { grid-template-columns: 1fr; gap: 32px; }
+    .gallery { grid-template-columns: 1fr; gap: 28px; }
+    .photo-row { grid-template-columns: 1fr; gap: 28px; }
   }
+
   @media (max-width: 640px) {
-    .nav-links { display: none; }
-    .hero { padding: 140px 0 80px; }
-    section { padding: 70px 0; }
-    .hero-actions .btn { width: 100%; justify-content: center; }
-    .about-stats { grid-template-columns: 1fr 1fr; }
-    .cursor { display: none !important; }
-    body { cursor: auto !important; }
+    .container { padding: 0 20px; }
+    .nav-links, .nav-cta { display: none; }
+    .burger { display: block; }
+    .mobile-menu { display: flex; }
+
+    header { padding: 18px 0; }
+    .logo { font-size: 22px; }
+
+    section { padding: 56px 0; }
+    .hero { padding: 130px 0 56px; }
+    .hero h1 { font-size: clamp(40px, 12vw, 64px); margin-bottom: 36px; line-height: 1; }
+    .hero-meta { font-size: 11px; margin-bottom: 36px; padding-bottom: 20px; }
+    .hero p { font-size: 16px; }
+    .hero-actions { flex-direction: column; gap: 10px; width: 100%; }
+    .hero-actions .btn { width: 100%; justify-content: center; padding: 14px 24px; }
+
+    .section-head { margin-bottom: 32px; padding-bottom: 20px; }
+    .section-heading { font-size: clamp(28px, 8vw, 40px); }
+    .manifest { font-size: clamp(19px, 5vw, 26px); margin-bottom: 40px; }
+
+    .feature h3 { font-size: 20px; }
+    .menu-item { padding: 18px 0; }
+    .menu-item .name { font-size: 18px; }
+    .menu-item .price { font-size: 18px; }
+    .menu-item .desc { font-size: 13px; }
+
+    .photo-wide .photo-img { aspect-ratio: 4/3; }
+    .photo:hover .photo-img { transform: none; }
+
+    .review p { font-size: 17px; }
+
+    .cta { padding: 70px 22px; }
+    .cta h2 { font-size: clamp(34px, 10vw, 52px); }
+
+    .to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+
+    .marquee-track { animation-duration: 80s; }
   }
 </style>
 </head>
 <body>
 
 <div class="progress" id="progress"></div>
-<div class="cursor" id="cursor"></div>
-
-<div class="aurora">
-  <span></span><span></span><span></span>
-</div>
-
 <button class="to-top" id="toTop" aria-label="Наверх">↑</button>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">О нас</a>
+  <a href="#menu">Меню</a>
+  <a href="#gallery">Атмосфера</a>
+  <a href="#reviews">Отзывы</a>
+  <a href="#contacts">Контакты</a>
+</div>
 
 <header>
   <div class="container nav">
-    <a href="#" class="logo">west</a>
+    <a href="#" class="logo">Aroma<span>.</span></a>
     <ul class="nav-links">
-      <li><a href="#services">Услуги</a></li>
-      <li><a href="#skills">Стек</a></li>
-      <li><a href="#projects">Проекты</a></li>
-      <li><a href="#about">Обо мне</a></li>
-      <li><a href="#contact">Контакты</a></li>
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#menu">Меню</a></li>
+      <li><a href="#gallery">Атмосфера</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
     </ul>
+    <span class="nav-cta">Забронировать</span>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
 <section class="hero">
   <div class="container">
-    <div class="hero-eyebrow">
-      <span class="dot"></span>
-      Доступен для заказов
+    <div class="hero-meta">
+      <div><span class="dot"></span>Спешелти-кофейня · центр города</div>
+      <div>Est. 2020</div>
     </div>
-    <h1>
-      <span class="line"><span>Разработчик</span></span>
-      <span class="line"><span>на <em>Python</em> · <span class="type-wrap" id="typewriter">JavaScript</span></span></span>
-    </h1>
-    <p>Делаю Telegram-ботов, парсеры, скрипты и сайты. Пишу чисто, сдаю в срок, объясняю понятно.</p>
-    <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary">Смотреть проекты →</a>
-      <a href="https://t.me/west_coder" class="btn btn-ghost">Написать в Telegram</a>
+    <h1>Кофе, ради<br>которого <em>хочется</em><br>выйти из дома</h1>
+    <div class="hero-bottom">
+      <p>Своя обжарка, зерно из Эфиопии и Колумбии, бариста с опытом. Открыто каждый день с 8:00 до 22:00.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-primary">Смотреть меню</a>
+        <span class="btn btn-ghost">Как добраться</span>
+      </div>
     </div>
   </div>
 </section>
-<section id="services">
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Своя обжарка</span>
+    <span>Зерно из Эфиопии</span>
+    <span>Свежая выпечка</span>
+    <span>Открыто каждый день</span>
+    <span>Своя обжарка</span>
+    <span>Зерно из Эфиопии</span>
+    <span>Свежая выпечка</span>
+    <span>Открыто каждый день</span>
+  </div>
+</div>
+<section id="about">
   <div class="container">
     <div class="section-head reveal">
-      <div class="section-title">Что я делаю</div>
-      <div class="section-num">01 — Услуги</div>
+      <div class="section-label">01 — О нас</div>
+      <h2 class="section-heading">Маленькая кофейня<br>с <em>большой</em> любовью</h2>
     </div>
-
-    <div class="services">
-      <div class="service-row reveal reveal-delay-1">
-        <div class="num">01</div>
-        <div class="name">Telegram-боты</div>
-        <div class="desc">Боты для магазинов, каналов, сервисов. Приём заявок, рассылки, уведомления.</div>
+    <div class="manifest reveal">
+      Мы открылись в 2020 году с одной идеей — делать кофе, который хочется <em>пить медленно</em>. Каждая чашка — результат работы фермеров, обжарщиков и бариста.
+    </div>
+    <div class="features-list">
+      <div class="feature reveal">
+        <div class="num">i.</div>
+        <h3>Своя обжарка</h3>
+        <p>Обжариваем зерно каждую неделю — свежесть чувствуется с первого глотка.</p>
       </div>
-      <div class="service-row reveal reveal-delay-2">
-        <div class="num">02</div>
-        <div class="name">Парсеры</div>
-        <div class="desc">Сбор данных с сайтов, каналов, маркетплейсов. Выгрузка в таблицы, БД, Telegram.</div>
+      <div class="feature reveal reveal-delay-1">
+        <div class="num">ii.</div>
+        <h3>Прямые поставки</h3>
+        <p>Работаем напрямую с фермами Эфиопии, Колумбии и Бразилии.</p>
       </div>
-      <div class="service-row reveal reveal-delay-3">
-        <div class="num">03</div>
-        <div class="name">Скрипты и автоматизация</div>
-        <div class="desc">Автоматизация рутины: обработка файлов, работа с API, отчёты по расписанию.</div>
-      </div>
-      <div class="service-row reveal reveal-delay-3">
-        <div class="num">04</div>
-        <div class="name">Сайты и лендинги</div>
-        <div class="desc">Одностраничные сайты, визитки, лендинги. Тёмные темы, анимации, адаптив.</div>
+      <div class="feature reveal reveal-delay-2">
+        <div class="num">iii.</div>
+        <h3>Бариста с опытом</h3>
+        <p>Прошли обучение в Specialty Coffee Association. Знаем, как раскрыть вкус.</p>
       </div>
     </div>
   </div>
 </section>
-<section id="skills" style="padding-top: 0;">
+
+<section id="menu" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
-      <div class="section-title">Стек</div>
-      <div class="section-num">02 — Навыки</div>
+      <div class="section-label">02 — Меню</div>
+      <h2 class="section-heading">Что <em>попробовать</em></h2>
     </div>
-    <div class="skills reveal">
-      <span class="skill">Python</span>
-      <span class="skill">JavaScript</span>
-      <span class="skill">Aiogram</span>
-      <span class="skill">BeautifulSoup</span>
-      <span class="skill">Requests</span>
-      <span class="skill">HTML</span>
-      <span class="skill">CSS</span>
-      <span class="skill">Git</span>
-    </div>
-  </div>
-</section>
-
-<section id="projects" style="padding-top: 0;">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="section-title">Избранные работы</div>
-      <div class="section-num">03 — Проекты</div>
-    </div>
-
-    <div class="projects">
-      <a href="https://furios114.github.io/coffee-landing/" target="_blank" rel="noopener" class="project reveal">
-        <div class="project-preview">
-          <img src="https://i.postimg.cc/zyCT2zhZ/IMG-20260912-205550-187.jpg" alt="Aroma — кофейня">
-        </div>
-        <div class="project-info">
-          <span class="project-tag">Лендинг · HTML / CSS / JS</span>
-          <h3>Aroma — кофейня</h3>
-          <p>Одностраничный лендинг. Журнальный стиль, анимации, галерея, меню, отзывы.</p>
-          <span class="project-link">Открыть сайт →</span>
-        </div>
-      </a>
-
-      <div class="project reveal reveal-delay-1" style="cursor: default;">
-        <div class="project-preview" style="font-family: Georgia, serif; font-style: italic; font-size: 42px; color: var(--accent-soft);">···</div>
-        <div class="project-info">
-          <span class="project-tag">Скоро</span>
-          <h3>Следующий проект</h3>
-          <p>Здесь появится следующая работа. Следи за обновлениями в Telegram-канале.</p>
-          <a href="https://t.me/infowests" class="project-link">Подписаться →</a>
-        </div>
+    <div class="menu">
+      <div class="menu-item reveal">
+        <div class="info"><div class="name">Эспрессо</div><div class="desc">классика, 30 мл</div></div>
+        <div class="price">150 ₽</div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="info"><div class="name">Капучино</div><div class="desc">плотная пенка, 250 мл</div></div>
+        <div class="price">250 ₽</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="info"><div class="name">Латте</div><div class="desc">с сиропом на выбор</div></div>
+        <div class="price">280 ₽</div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="info"><div class="name">Флэт уайт</div><div class="desc">двойной, на цельном молоке</div></div>
+        <div class="price">290 ₽</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="info"><div class="name">Раф ванильный</div><div class="desc">нежный, с ванилью</div></div>
+        <div class="price">320 ₽</div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="info"><div class="name">Круассан</div><div class="desc">свежий, из пекарни рядом</div></div>
+        <div class="price">190 ₽</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="info"><div class="name">Чизкейк</div><div class="desc">Нью-Йорк, с ягодным соусом</div></div>
+        <div class="price">340 ₽</div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="info"><div class="name">Матча-латте</div><div class="desc">на цельном или овсяном молоке</div></div>
+        <div class="price">300 ₽</div>
       </div>
     </div>
   </div>
 </section>
-<section id="about" style="padding-top: 0;">
+<section id="gallery" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
-      <div class="section-title">Обо мне</div>
-      <div class="section-num">04 — Кто я</div>
+      <div class="section-label">03 — Атмосфера</div>
+      <h2 class="section-heading">Заходите <em>посмотреть</em></h2>
     </div>
-
-    <div class="about">
-      <div class="about-photo reveal">w.</div>
-      <div class="about-text reveal reveal-delay-1">
-        <h3>Пишу код, который решает задачи</h3>
-        <p>Меня зовут west. Я разработчик на Python и JavaScript. Делаю ботов, парсеры, скрипты и сайты — от идеи до готового результата.</p>
-        <p>Работаю удалённо, отвечаю быстро, объясняю без лишнего жаргона. Если задача непонятная — сначала разберусь, потом скажу, что реально сделать.</p>
-        <div class="about-stats">
-          <div class="stat"><div class="value">Python</div><div class="label">основной язык</div></div>
-          <div class="stat"><div class="value">JS</div><div class="label">для фронта</div></div>
-          <div class="stat"><div class="value">24/7</div><div class="label">на связи</div></div>
-        </div>
+    <div class="gallery">
+      <figure class="photo photo-wide reveal">
+        <div class="photo-img" style="background-image:url('https://cdn.phototourl.com/free/2026-09-11-6477c7e0-e3b4-40e4-b3fd-413a381c0f86.webp');"></div>
+        <figcaption>
+          <span class="title">Главный зал</span>
+          <span class="num">Fig. 01</span>
+        </figcaption>
+      </figure>
+      <div class="photo-row">
+        <figure class="photo reveal">
+          <div class="photo-img" style="background-image:url('https://cdn.phototourl.com/free/2026-09-11-d1a371a1-178a-4892-8ae1-eec947ad8b96.webp');"></div>
+          <figcaption>
+            <span class="title">Бар</span>
+            <span class="num">Fig. 02</span>
+          </figcaption>
+        </figure>
+        <figure class="photo reveal reveal-delay-1">
+          <div class="photo-img" style="background-image:url('https://cdn.phototourl.com/free/2026-09-11-ba9068ef-1cab-4a05-93d1-5401b53c4734.jpg');"></div>
+          <figcaption>
+            <span class="title">Витрина с десертами</span>
+            <span class="num">Fig. 03</span>
+          </figcaption>
+        </figure>
       </div>
+      <figure class="photo photo-wide reveal">
+        <div class="photo-img" style="background-image:url('https://cdn.phototourl.com/free/2026-09-11-7135a70b-7cf2-4a20-a12f-55f6383de7ef.jpg');"></div>
+        <figcaption>
+          <span class="title">Летняя веранда</span>
+          <span class="num">Fig. 04</span>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<section id="contact" style="padding-top: 0;">
+<section id="reviews" style="padding-top: 0;">
   <div class="container">
-    <div class="cta reveal">
-      <h2>Есть <em>задача?</em></h2>
-      <p>Напиши — обсудим. Отвечаю в течение часа, консультирую бесплатно.</p>
-      <a href="https://t.me/west_coder" class="btn btn-primary">Написать в Telegram →</a>
+    <div class="section-head reveal">
+      <div class="section-label">04 — Отзывы</div>
+      <h2 class="section-heading">Что говорят <em>гости</em></h2>
     </div>
+    <div class="reviews">
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <p>«Лучший капучино в городе. Хожу каждое утро перед работой — бариста уже знают мой заказ.»</p>
+        <div class="review-author"><strong>Анна</strong> · постоянный гость</div>
+      </div>
+      <div class="review reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <p>«Работаю здесь по несколько часов. Тихо, вкусно, есть розетки. Идеальное место для фриланса.»</p>
+        <div class="review-author"><strong>Михаил</strong> · дизайнер</div>
+      </div>
+      <div class="review reveal reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <p>«Открыл для себя флэт уайт именно здесь. Пробовал в других местах — не то. Возвращаюсь снова.»</p>
+        <div class="review-author"><strong>Дмитрий</strong> · предприниматель</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contacts" style="padding: 0;">
+  <div class="cta reveal">
+    <div class="label">Забронировать столик</div>
+    <h2>Ждём вас<br><em>каждый день</em></h2>
+    <span class="btn">Забронировать</span>
   </div>
 </section>
 
 <footer>
   <div class="container footer-inner">
-    <div>© 2026 west</div>
-    <div class="footer-links">
-      <a href="https://t.me/infowests">Канал</a>
-      <a href="https://t.me/west_coder">Telegram</a>
-      <a href="https://github.com/furios114">GitHub</a>
-    </div>
+    <div class="footer-logo">Aroma<span>.</span></div>
+    <div>© 2026 Aroma · Кофейня · Est. 2020</div>
   </div>
 </footer>
+
 <script>
-  // АНИМАЦИИ ПОЯВЛЕНИЯ
+  // Reveal-анимации
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -789,82 +818,36 @@ section { padding: 100px 0; }
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // СКРОЛЛ-ПРОГРЕСС + КНОПКА "НАВЕРХ"
+  // Прогресс + кнопка наверх
   const progress = document.getElementById('progress');
   const toTop = document.getElementById('toTop');
-
   window.addEventListener('scroll', () => {
     const h = document.documentElement;
     const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
     progress.style.width = scrolled + '%';
     if (h.scrollTop > 600) toTop.classList.add('show');
     else toTop.classList.remove('show');
+  }, { passive: true });
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Бургер-меню
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
   });
-
-  toTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // КАСТОМНЫЙ КУРСОР
-  const cursor = document.getElementById('cursor');
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    let mx = 0, my = 0, cx = 0, cy = 0;
-    document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
-    function loop() {
-      cx += (mx - cx) * 0.2;
-      cy += (my - cy) * 0.2;
-      cursor.style.left = cx + 'px';
-      cursor.style.top = cy + 'px';
-      requestAnimationFrame(loop);
-    }
-    loop();
-
-    document.querySelectorAll('a, .btn, .skill, .service-row, .project, .to-top').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-  }
-
-  // МАГНИТНЫЕ КНОПКИ
-  document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.3 - 2}px)`;
-    });
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transform = '';
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
     });
   });
-
-  // ПЕЧАТАЮЩИЙСЯ ТЕКСТ (ЯЗЫКИ)
-  const words = ['JavaScript', 'Python', 'HTML', 'CSS', 'Aiogram', 'BeautifulSoup'];
-  let wi = 0, ci = 0, deleting = false;
-  const typeEl = document.getElementById('typewriter');
-
-  function type() {
-    const word = words[wi];
-    if (!deleting) {
-      typeEl.textContent = word.slice(0, ++ci);
-      if (ci === word.length) {
-        deleting = true;
-        setTimeout(type, 1800);
-        return;
-      }
-    } else {
-      typeEl.textContent = word.slice(0, --ci);
-      if (ci === 0) {
-        deleting = false;
-        wi = (wi + 1) % words.length;
-      }
-    }
-    setTimeout(type, deleting ? 50 : 100);
-  }
-  if (typeEl) type();
 </script>
 
 </body>
