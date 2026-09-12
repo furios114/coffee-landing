@@ -38,7 +38,7 @@
     cursor: none;
   }
 
-  /* ---------- АВРОРА-ФОН ---------- */
+  /* АВРОРА-ФОН */
   .aurora {
     position: fixed;
     inset: 0;
@@ -70,20 +70,22 @@
     top: 40%; left: 50%;
     animation: float3 30s ease-in-out infinite;
   }
-  @keyframes float1 {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(80px, 60px); }
-  }
-  @keyframes float2 {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-100px, -80px); }
-  }
-  @keyframes float3 {
-    0%, 100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, -60px); }
+  @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(80px,60px); } }
+  @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-100px,-80px); } }
+  @keyframes float3 { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,-60px); } }
+
+  /* ШУМ-ТЕКСТУРА */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* ---------- КАСТОМНЫЙ КУРСОР ---------- */
+  /* КАСТОМНЫЙ КУРСОР */
   .cursor {
     position: fixed;
     width: 12px; height: 12px;
@@ -102,10 +104,9 @@
   }
   @media (hover: hover) and (pointer: fine) {
     .cursor { display: block; }
-    body { cursor: none; }
   }
 
-  /* ---------- СКРОЛЛ-ПРОГРЕСС ---------- */
+  /* СКРОЛЛ-ПРОГРЕСС */
   .progress {
     position: fixed;
     top: 0; left: 0;
@@ -116,8 +117,40 @@
     transition: width 0.1s linear;
   }
 
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
-/* ---------- АНИМАЦИИ ---------- */
+  /* КНОПКА "НАВЕРХ" */
+  .to-top {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    width: 48px; height: 48px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s, border-color 0.3s;
+    z-index: 500;
+    font-size: 20px;
+  }
+  .to-top.show { opacity: 1; visibility: visible; }
+  .to-top:hover {
+    border-color: var(--accent);
+    color: var(--accent-soft);
+    transform: translateY(-3px);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 28px;
+    position: relative;
+    z-index: 2;
+  }
+/* АНИМАЦИИ ПОЯВЛЕНИЯ */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -129,7 +162,7 @@
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 
-/* ---------- ШАПКА ---------- */
+/* ШАПКА */
 header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -166,7 +199,7 @@ header {
   transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--text); }
-/* ---------- HERO ---------- */
+/* HERO */
 .hero { padding: 180px 0 120px; }
 .hero-eyebrow {
   display: inline-flex;
@@ -189,13 +222,27 @@ header {
   70% { box-shadow: 0 0 0 8px rgba(61,220,132,0); }
   100% { box-shadow: 0 0 0 0 rgba(61,220,132,0); }
 }
+
 .hero h1 {
   font-size: clamp(44px, 7vw, 84px);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.04em;
   margin-bottom: 28px;
-  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero h1 .line {
+  display: block;
+  overflow: hidden;
+}
+.hero h1 .line > span {
+  display: inline-block;
+  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero h1 .line:nth-child(1) > span { animation-delay: 0.15s; }
+.hero h1 .line:nth-child(2) > span { animation-delay: 0.3s; }
+@keyframes slideUp {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
 }
 .hero h1 em {
   font-style: italic;
@@ -206,15 +253,20 @@ header {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ПЕЧАТАЮЩИЙСЯ ТЕКСТ — МЕНЬШЕ */
 .type-wrap {
   display: inline-block;
+  font-size: 0.65em;
   position: relative;
+  vertical-align: baseline;
 }
 .type-wrap::after {
   content: "|";
   color: var(--accent);
   animation: blink 0.9s step-end infinite;
   margin-left: 2px;
+  font-weight: 400;
 }
 @keyframes blink {
   0%, 100% { opacity: 1; }
@@ -226,19 +278,20 @@ header {
   color: var(--muted);
   max-width: 600px;
   margin-bottom: 40px;
-  animation: fadeUp 0.8s 0.3s ease both;
+  animation: fadeUp 0.8s 0.5s ease both;
 }
 .hero-actions {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  animation: fadeUp 0.8s 0.4s ease both;
+  animation: fadeUp 0.8s 0.6s ease both;
 }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* КНОПКИ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -248,15 +301,22 @@ header {
   font-size: 15px;
   font-weight: 500;
   text-decoration: none;
-  transition: transform 0.25s, background 0.25s, border-color 0.25s;
+  transition: transform 0.25s, border-color 0.25s, color 0.25s;
   border: 1px solid transparent;
   cursor: pointer;
-  will-change: transform;
+  position: relative;
+  overflow: hidden;
 }
 .btn-primary {
-  background: var(--accent);
+  background: linear-gradient(120deg, var(--accent), var(--accent-soft), var(--accent));
+  background-size: 200% 100%;
+  animation: gradientShift 4s ease infinite;
   color: #fff;
   box-shadow: 0 10px 40px rgba(124, 92, 255, 0.3);
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 .btn-ghost {
   background: transparent;
@@ -267,7 +327,7 @@ header {
   border-color: var(--accent);
   color: var(--accent-soft);
 }
-/* ---------- СЕКЦИИ ---------- */
+/* СЕКЦИИ */
 section { padding: 100px 0; }
 .section-head {
   display: flex;
@@ -293,7 +353,7 @@ section { padding: 100px 0; }
   font-style: italic;
 }
 
-/* ---------- УСЛУГИ ---------- */
+/* УСЛУГИ */
 .services { display: flex; flex-direction: column; }
 .service-row {
   display: grid;
@@ -319,16 +379,9 @@ section { padding: 100px 0; }
   transition: color 0.25s;
 }
 .service-row:hover .name { color: var(--accent-soft); }
-.service-row .desc {
-  color: var(--muted);
-  font-size: 15px;
-}
-/* ---------- НАВЫКИ ---------- */
-.skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+.service-row .desc { color: var(--muted); font-size: 15px; }
+/* НАВЫКИ */
+.skills { display: flex; flex-wrap: wrap; gap: 10px; }
 .skill {
   padding: 10px 20px;
   background: var(--card);
@@ -344,7 +397,7 @@ section { padding: 100px 0; }
   transform: translateY(-2px);
 }
 
-/* ---------- ПРОЕКТЫ ---------- */
+/* ПРОЕКТЫ */
 .projects { display: grid; grid-template-columns: 1fr; gap: 20px; }
 .project {
   display: grid;
@@ -356,6 +409,8 @@ section { padding: 100px 0; }
   text-decoration: none;
   color: inherit;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+  position: relative;
+  z-index: 2;
 }
 .project:hover {
   transform: translateY(-4px);
@@ -367,14 +422,19 @@ section { padding: 100px 0; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: Georgia, serif;
-  font-style: italic;
-  font-size: 42px;
-  color: var(--accent-soft);
   border-right: 1px solid var(--border);
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
+  padding: 16px;
   position: relative;
+  z-index: 2;
+}
+.project-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  display: block;
+  pointer-events: none;
 }
 .project-info {
   padding: 40px;
@@ -411,7 +471,7 @@ section { padding: 100px 0; }
   transition: gap 0.25s;
 }
 .project:hover .project-link { gap: 12px; }
-  /* ---------- ОБО МНЕ ---------- */
+  /* ОБО МНЕ */
   .about {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -443,11 +503,7 @@ section { padding: 100px 0; }
     margin-bottom: 20px;
     line-height: 1.2;
   }
-  .about-text p {
-    color: var(--muted);
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
+  .about-text p { color: var(--muted); font-size: 16px; margin-bottom: 20px; }
   .about-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -467,7 +523,7 @@ section { padding: 100px 0; }
   }
   .stat .label { font-size: 13px; color: var(--dim); margin-top: 4px; }
 
-  /* ---------- CTA ---------- */
+  /* CTA */
   .cta {
     text-align: center;
     padding: 80px 40px;
@@ -516,7 +572,7 @@ section { padding: 100px 0; }
   }
   .cta .btn { position: relative; z-index: 1; }
 
-  /* ---------- ПОДВАЛ ---------- */
+  /* ПОДВАЛ */
   footer {
     padding: 40px 0;
     border-top: 1px solid var(--border);
@@ -539,7 +595,7 @@ section { padding: 100px 0; }
   }
   .footer-links a:hover { color: var(--accent-soft); }
 
-  /* ---------- АДАПТИВ ---------- */
+  /* АДАПТИВ */
   @media (max-width: 900px) {
     .project { grid-template-columns: 1fr; }
     .project-preview { border-right: none; border-bottom: 1px solid var(--border); }
@@ -561,20 +617,15 @@ section { padding: 100px 0; }
 </head>
 <body>
 
-<!-- СКРОЛЛ-ПРОГРЕСС -->
 <div class="progress" id="progress"></div>
-
-<!-- КАСТОМНЫЙ КУРСОР -->
 <div class="cursor" id="cursor"></div>
 
-<!-- АВРОРА-ФОН -->
 <div class="aurora">
-  <span></span>
-  <span></span>
-  <span></span>
+  <span></span><span></span><span></span>
 </div>
 
-<!-- ШАПКА -->
+<button class="to-top" id="toTop" aria-label="Наверх">↑</button>
+
 <header>
   <div class="container nav">
     <a href="#" class="logo">west</a>
@@ -587,14 +638,16 @@ section { padding: 100px 0; }
     </ul>
   </div>
 </header>
-<!-- HERO -->
 <section class="hero">
   <div class="container">
     <div class="hero-eyebrow">
       <span class="dot"></span>
       Доступен для заказов
     </div>
-    <h1>Разработчик<br>на <em>Python</em> и <span class="type-wrap" id="typewriter">JavaScript</span></h1>
+    <h1>
+      <span class="line"><span>Разработчик</span></span>
+      <span class="line"><span>на <em>Python</em> · <span class="type-wrap" id="typewriter">JavaScript</span></span></span>
+    </h1>
     <p>Делаю Telegram-ботов, парсеры, скрипты и сайты. Пишу чисто, сдаю в срок, объясняю понятно.</p>
     <div class="hero-actions">
       <a href="#projects" class="btn btn-primary">Смотреть проекты →</a>
@@ -602,7 +655,6 @@ section { padding: 100px 0; }
     </div>
   </div>
 </section>
-<!-- УСЛУГИ -->
 <section id="services">
   <div class="container">
     <div class="section-head reveal">
@@ -634,7 +686,6 @@ section { padding: 100px 0; }
     </div>
   </div>
 </section>
-<!-- НАВЫКИ -->
 <section id="skills" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
@@ -654,7 +705,6 @@ section { padding: 100px 0; }
   </div>
 </section>
 
-<!-- ПРОЕКТЫ -->
 <section id="projects" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
@@ -663,8 +713,10 @@ section { padding: 100px 0; }
     </div>
 
     <div class="projects">
-      <a href="https://furios114.github.io/coffee-landing/" target="_blank" class="project reveal">
-        <div class="project-preview" style="background-image:url('https://i.postimg.cc/zyCT2zhZ/IMG-20260912-205550-187.jpg');"></div>
+      <a href="https://furios114.github.io/coffee-landing/" target="_blank" rel="noopener" class="project reveal">
+        <div class="project-preview">
+          <img src="https://i.postimg.cc/zyCT2zhZ/IMG-20260912-205550-187.jpg" alt="Aroma — кофейня">
+        </div>
         <div class="project-info">
           <span class="project-tag">Лендинг · HTML / CSS / JS</span>
           <h3>Aroma — кофейня</h3>
@@ -674,7 +726,7 @@ section { padding: 100px 0; }
       </a>
 
       <div class="project reveal reveal-delay-1" style="cursor: default;">
-        <div class="project-preview" style="font-size: 32px;">···</div>
+        <div class="project-preview" style="font-family: Georgia, serif; font-style: italic; font-size: 42px; color: var(--accent-soft);">···</div>
         <div class="project-info">
           <span class="project-tag">Скоро</span>
           <h3>Следующий проект</h3>
@@ -685,7 +737,6 @@ section { padding: 100px 0; }
     </div>
   </div>
 </section>
-<!-- ОБО МНЕ -->
 <section id="about" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
@@ -700,25 +751,15 @@ section { padding: 100px 0; }
         <p>Меня зовут west. Я разработчик на Python и JavaScript. Делаю ботов, парсеры, скрипты и сайты — от идеи до готового результата.</p>
         <p>Работаю удалённо, отвечаю быстро, объясняю без лишнего жаргона. Если задача непонятная — сначала разберусь, потом скажу, что реально сделать.</p>
         <div class="about-stats">
-          <div class="stat">
-            <div class="value">Python</div>
-            <div class="label">основной язык</div>
-          </div>
-          <div class="stat">
-            <div class="value">JS</div>
-            <div class="label">для фронта</div>
-          </div>
-          <div class="stat">
-            <div class="value">24/7</div>
-            <div class="label">на связи</div>
-          </div>
+          <div class="stat"><div class="value">Python</div><div class="label">основной язык</div></div>
+          <div class="stat"><div class="value">JS</div><div class="label">для фронта</div></div>
+          <div class="stat"><div class="value">24/7</div><div class="label">на связи</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- КОНТАКТЫ -->
 <section id="contact" style="padding-top: 0;">
   <div class="container">
     <div class="cta reveal">
@@ -729,7 +770,6 @@ section { padding: 100px 0; }
   </div>
 </section>
 
-<!-- ПОДВАЛ -->
 <footer>
   <div class="container footer-inner">
     <div>© 2026 west</div>
@@ -741,7 +781,7 @@ section { padding: 100px 0; }
   </div>
 </footer>
 <script>
-  // ---------- АНИМАЦИИ ПОЯВЛЕНИЯ ----------
+  // АНИМАЦИИ ПОЯВЛЕНИЯ
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -752,15 +792,23 @@ section { padding: 100px 0; }
   }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ---------- СКРОЛЛ-ПРОГРЕСС ----------
+  // СКРОЛЛ-ПРОГРЕСС + КНОПКА "НАВЕРХ"
   const progress = document.getElementById('progress');
+  const toTop = document.getElementById('toTop');
+
   window.addEventListener('scroll', () => {
     const h = document.documentElement;
     const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
     progress.style.width = scrolled + '%';
+    if (h.scrollTop > 600) toTop.classList.add('show');
+    else toTop.classList.remove('show');
   });
 
-  // ---------- КАСТОМНЫЙ КУРСОР ----------
+  toTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // КАСТОМНЫЙ КУРСОР
   const cursor = document.getElementById('cursor');
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     let mx = 0, my = 0, cx = 0, cy = 0;
@@ -774,13 +822,13 @@ section { padding: 100px 0; }
     }
     loop();
 
-    document.querySelectorAll('a, .btn, .skill, .service-row, .project').forEach(el => {
+    document.querySelectorAll('a, .btn, .skill, .service-row, .project, .to-top').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
   }
 
-  // ---------- МАГНИТНЫЕ КНОПКИ ----------
+  // МАГНИТНЫЕ КНОПКИ
   document.querySelectorAll('.btn').forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
       const rect = btn.getBoundingClientRect();
@@ -793,8 +841,8 @@ section { padding: 100px 0; }
     });
   });
 
-  // ---------- ПЕЧАТАЮЩИЙСЯ ТЕКСТ ----------
-  const words = ['JavaScript', 'ботах', 'парсерах', 'сайтах'];
+  // ПЕЧАТАЮЩИЙСЯ ТЕКСТ (ЯЗЫКИ)
+  const words = ['JavaScript', 'Python', 'HTML', 'CSS', 'Aiogram', 'BeautifulSoup'];
   let wi = 0, ci = 0, deleting = false;
   const typeEl = document.getElementById('typewriter');
 
